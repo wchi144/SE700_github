@@ -51,13 +51,42 @@
 		
 		<div class="container">
 			<div class="row">
-				<h1>
-					Home Page
-				</h1>
-				<p>
-					Introduction to peoject#100: Geolocation Services
-				</p>
-				
+				<div class="col-md-8">
+					<div id="map_canvas"></div>
+				</div>	
+				<div class="col-md-4">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>
+									City
+								</th>
+								<th>
+									Country
+								</th>
+								<th>
+									People Count
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Auckland</td>
+								<td>New Zealand</td>
+								<td>100</td>
+							</tr>
+							<tr>
+								<td>Wellington</td>
+								<td>New Zealand</td>
+								<td>50</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+					
+					
 			</div>
 
 			<hr></hr>

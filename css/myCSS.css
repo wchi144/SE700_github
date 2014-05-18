@@ -4,7 +4,8 @@
 }
 
 .jumbotron{
+	
 	background: url(../images/headerPink.jpg) no-repeat;
-	background-color: rgba(0, 0, 0, 0.6);
+	background-color: rgba(0, 0, 0, 0.3);
 	background-size: 100%;
 }
