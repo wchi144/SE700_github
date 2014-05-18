@@ -50,6 +50,18 @@
 		</div>
 		
 		<div class="container">
+			<p>
+				Enter an artist name in the search box and see their popularity distribution on the heatmap below
+			</p>
+			<div class="row">
+				<div class="col-md-11">
+					<input type="text" class="form-control" id="searchBox" placeholder="Text input">
+				</div>
+				<div class="col-md-1">
+					<button type="button" class="btn btn-primary" id="searchButton">Primary</button>
+				</div>
+			</div>
+			<br>
 			<div class="row">
 				<div class="col-md-8">
 					<div id="map_canvas"></div>
