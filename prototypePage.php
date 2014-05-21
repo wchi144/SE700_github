@@ -17,55 +17,42 @@
 		
 	</head>
 	<body>
-		<!--
-
-		 Main jumbotron for a primary marketing message or…
-
-		-->
-		<div class="jumbotron">
-			<div class="container">
-				<h1>
-					Geolocation Service
-				</h1>
-				<p>
-					A geolocation service to illustrate artist popularity across the globe via SNS
-				</p>
-			</div>
-		</div>
-
+		<?php include("header.php") ?>
 		<div class="navbar navbar-default" role="navigation">
 			<div class="container-fluid">
 				<div class="navbar-header"></div>
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
-						<li class="active">
+						<li>
 							<a href="home.php">Home</a>
 						</li>
-						<li>
+						<li class="active">
 							<a href="prototypePage.php">Prototype</a>
 						</li>
 					</ul>
 				</div>
 			</div>
-		</div>
-		
+		</div>		
 		<div class="container">
 			<p>
 				Enter an artist name in the search box and see their popularity distribution on the heatmap below
 			</p>
+			<br>
 			<div class="row">
 				<div class="col-md-11">
 					<input type="text" class="form-control" id="searchBox" placeholder="Text input">
 				</div>
 				<div class="col-md-1">
-					<button type="button" class="btn btn-primary" id="searchButton">Primary</button>
+					<button type="button" class="btn btn-primary" id="searchButton">Search</button>
 				</div>
 			</div>
 			<br>
 			<div class="row">
+				<!--  HEATMAP SECTION -->
 				<div class="col-md-8">
 					<div id="map_canvas"></div>
 				</div>	
+				<!--  TABLE SECTION -->
 				<div class="col-md-4">
 					<table class="table table-striped">
 						<thead>
@@ -92,23 +79,107 @@
 								<td>New Zealand</td>
 								<td>50</td>
 							</tr>
+							<tr>
+								<td>Wellington</td>
+								<td>New Zealand</td>
+								<td>1</td>
+							</tr>
+							<tr>
+								<td>Wellington</td>
+								<td>New Zealand</td>
+								<td>2</td>
+							</tr>
+							<tr>
+								<td>Wellington</td>
+								<td>New Zealand</td>
+								<td>3</td>
+							</tr>
+							<tr>
+								<td>Wellington</td>
+								<td>New Zealand</td>
+								<td>4</td>
+							</tr>
+							<tr>
+								<td>Wellington</td>
+								<td>New Zealand</td>
+								<td>5</td>
+							</tr>
+							<tr>
+								<td>Wellington</td>
+								<td>New Zealand</td>
+								<td>6</td>
+							</tr>
+							<tr>
+								<td>Wellington</td>
+								<td>New Zealand</td>
+								<td>7</td>
+							</tr>
+							<tr>
+								<td>Wellington</td>
+								<td>New Zealand</td>
+								<td>8</td>
+							</tr><tr>
+								<td>Wellington</td>
+								<td>New Zealand</td>
+								<td>9</td>
+							</tr>
+							<tr>
+								<td>Wellington</td>
+								<td>New Zealand</td>
+								<td>10</td>
+							</tr>
+							<tr>
+								<td>Wellington</td>
+								<td>New Zealand</td>
+								<td>11</td>
+							</tr>
+							<tr>
+								<td>Wellington</td>
+								<td>New Zealand</td>
+								<td>12</td>
+							</tr>
+							<tr>
+								<td>Wellington</td>
+								<td>New Zealand</td>
+								<td>13</td>
+							</tr>
+							<tr>
+								<td>Wellington</td>
+								<td>New Zealand</td>
+								<td>14</td>
+							</tr>
+							<tr>
+								<td>Wellington</td>
+								<td>New Zealand</td>
+								<td>15</td>
+							</tr>
+							<tr>
+								<td>Wellington</td>
+								<td>New Zealand</td>
+								<td>16</td>
+							</tr>
+							<tr>
+								<td>Wellington</td>
+								<td>New Zealand</td>
+								<td>17</td>
+							</tr>
+							<tr>
+								<td>Wellington</td>
+								<td>New Zealand</td>
+								<td>18</td>
+							</tr>
+							<tr>
+								<td>Wellington</td>
+								<td>New Zealand</td>
+								<td>19</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
-			<div class="row">
-					
-					
-			</div>
 
 			<hr></hr>
-			<footer>
-				<p>
-
-					© SE700 szha460 wchi144 2014
-
-				</p>
-			</footer>
+			<?php include("footer.php") ?>
 		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
