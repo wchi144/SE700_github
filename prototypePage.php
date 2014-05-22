@@ -68,7 +68,7 @@ $get_total_rows = mysqli_fetch_array($results);
 					<table class="table table-striped">
 						<thead>
 							<tr>
-								<th style="width:90px">
+								<th style="width:100px">
 									Country
 								</th>
 								<th style="width:100px">
