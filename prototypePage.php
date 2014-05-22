@@ -68,13 +68,13 @@ $get_total_rows = mysqli_fetch_array($results);
 					<table class="table table-striped">
 						<thead>
 							<tr>
-								<th style="width:100px">
+								<th style="width:105px">
 									Country
 								</th>
-								<th style="width:100px">
+								<th style="width:105px">
 									City
 								</th>
-								<th>
+								<th style="width:105px">
 									People Count
 								</th>
 							</tr>
