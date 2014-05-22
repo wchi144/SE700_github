@@ -1,3 +1,12 @@
+<?php
+include("config.php");
+
+//Get the results from the query
+$results = mysqli_query($connecDB,"SELECT COUNT(*) FROM result");
+
+//Get an array of the records
+$get_total_rows = mysqli_fetch_array($results); 
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -18,6 +27,7 @@
 	</head>
 	<body>
 		<?php include("header.php") ?>
+		
 		<div class="navbar navbar-default" role="navigation">
 			<div class="container-fluid">
 				<div class="navbar-header"></div>
@@ -44,6 +54,7 @@
 				</div>
 				<div class="col-md-1">
 					<button type="button" class="btn btn-primary" id="searchButton">Search</button>
+					
 				</div>
 			</div>
 			<br>
@@ -57,122 +68,19 @@
 					<table class="table table-striped">
 						<thead>
 							<tr>
-								<th>
-									City
-								</th>
-								<th>
+								<th style="width:90px">
 									Country
+								</th>
+								<th style="width:100px">
+									City
 								</th>
 								<th>
 									People Count
 								</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td>Auckland</td>
-								<td>New Zealand</td>
-								<td>100</td>
-							</tr>
-							<tr>
-								<td>Wellington</td>
-								<td>New Zealand</td>
-								<td>50</td>
-							</tr>
-							<tr>
-								<td>Wellington</td>
-								<td>New Zealand</td>
-								<td>1</td>
-							</tr>
-							<tr>
-								<td>Wellington</td>
-								<td>New Zealand</td>
-								<td>2</td>
-							</tr>
-							<tr>
-								<td>Wellington</td>
-								<td>New Zealand</td>
-								<td>3</td>
-							</tr>
-							<tr>
-								<td>Wellington</td>
-								<td>New Zealand</td>
-								<td>4</td>
-							</tr>
-							<tr>
-								<td>Wellington</td>
-								<td>New Zealand</td>
-								<td>5</td>
-							</tr>
-							<tr>
-								<td>Wellington</td>
-								<td>New Zealand</td>
-								<td>6</td>
-							</tr>
-							<tr>
-								<td>Wellington</td>
-								<td>New Zealand</td>
-								<td>7</td>
-							</tr>
-							<tr>
-								<td>Wellington</td>
-								<td>New Zealand</td>
-								<td>8</td>
-							</tr><tr>
-								<td>Wellington</td>
-								<td>New Zealand</td>
-								<td>9</td>
-							</tr>
-							<tr>
-								<td>Wellington</td>
-								<td>New Zealand</td>
-								<td>10</td>
-							</tr>
-							<tr>
-								<td>Wellington</td>
-								<td>New Zealand</td>
-								<td>11</td>
-							</tr>
-							<tr>
-								<td>Wellington</td>
-								<td>New Zealand</td>
-								<td>12</td>
-							</tr>
-							<tr>
-								<td>Wellington</td>
-								<td>New Zealand</td>
-								<td>13</td>
-							</tr>
-							<tr>
-								<td>Wellington</td>
-								<td>New Zealand</td>
-								<td>14</td>
-							</tr>
-							<tr>
-								<td>Wellington</td>
-								<td>New Zealand</td>
-								<td>15</td>
-							</tr>
-							<tr>
-								<td>Wellington</td>
-								<td>New Zealand</td>
-								<td>16</td>
-							</tr>
-							<tr>
-								<td>Wellington</td>
-								<td>New Zealand</td>
-								<td>17</td>
-							</tr>
-							<tr>
-								<td>Wellington</td>
-								<td>New Zealand</td>
-								<td>18</td>
-							</tr>
-							<tr>
-								<td>Wellington</td>
-								<td>New Zealand</td>
-								<td>19</td>
-							</tr>
+						<tbody class="dataBody">
+							<div class="animation_image" style="display:none; aligh:center; margin-top:150px; margin-left:50px"><img src="images/ajax-loader.gif"> Loading...</div>
 						</tbody>
 					</table>
 				</div>
@@ -183,6 +91,29 @@
 		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+		$(document).ready(function() {
+		
+			//Get the number of rows of the resulting query
+			var total_rows = <?php echo $get_total_rows[0]; ?>;
+		
+			//When the search button is clicked
+			$("#searchButton").click(function (e) { 
+	
+				//Show loading image
+				$('.animation_image').show(); 
+
+				//post page number and load returned data into result element
+				$.post('fetch_page.php', function(data) {
+		
+					$('.dataBody').load("fetch_page.php");
+					
+					//Hide loading image
+					$('.animation_image').hide(); //hide loading image once data is received
+	
+				});
+			});
+		});
+</script>
 	</body>
 </html>
-
