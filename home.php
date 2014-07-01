@@ -38,7 +38,7 @@
 					Home Page
 				</h1>
 				<p>
-					Introduction to peoject#100: Geolocation Services
+					Introduction to project#100: Geolocation Services
 				</p>
 				
 			</div>
