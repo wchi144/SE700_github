@@ -23,7 +23,7 @@ $get_total_rows = mysqli_fetch_array($results);
 		<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
 		<script src="js/googleMap.js"></script>
-
+                
 		
 	</head>
 	<body>
@@ -57,7 +57,7 @@ $get_total_rows = mysqli_fetch_array($results);
 					<input type="text" class="form-control" id="searchBox" placeholder="Text input">
 				</div>
 				<div class="col-md-1">
-					<button type="button" class="btn btn-primary" id="searchButton">Search</button>	
+					<button type="button" class="btn btn-primary" id="searchButton" onclick = "load_results()">Search</button>	
 				</div>
 			</div>
 			<br>
@@ -120,24 +120,25 @@ $get_total_rows = mysqli_fetch_array($results);
 				</div>	
 				<!--  TABLE SECTION -->
 				<div class="col-md-4">
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th style="width:105px">
-									Country
-								</th>
-								<th style="width:105px">
-									City
-								</th>
-								<th style="width:105px">
-									People Count
-								</th>
-							</tr>
-						</thead>
-						<tbody class="dataBody">
-							<div class="animation_image" style="display:none; aligh:center; margin-top:150px; margin-left:50px"><img src="images/ajax-loader.gif"> Loading...</div>
-						</tbody>
-					</table>
+                                    <table class="table table-striped">
+                                        <thead>
+                                                    <tr>
+                                                        <th style="width:105px">
+                                                                Country
+                                                        </th>
+                                                        <th style="width:105px">
+                                                                City
+                                                        </th>
+                                                        <th style="width:105px">
+                                                                People Count
+                                                        </th>
+                                                    </tr>
+                                        </thead>
+                                        <tbody class="dataBody">
+                                                   
+                                        </tbody>
+                                    </table>
+                                     <div class="animation_image" style="display:none; aligh:center;"><img src="images/ajax-loader.gif"> Loading...</div>
 				</div>
 			</div>
 
@@ -149,36 +150,7 @@ $get_total_rows = mysqli_fetch_array($results);
 		<script src="js/jquery-1.8.3.min.js"></script>
 		<script src="js/checkboxToogle.js"></script>
 		<script src="js/bootstrap-switch.min.js"></script>
-		<script type="text/javascript">
-		$(document).ready(function() {
-		
-			//Get the number of rows of the resulting query
-			var total_rows = <?php echo $get_total_rows[0]; ?>;
-		
-			//When the search button is clicked
-			$("#searchButton").click(function (e) { 
-			
-				//Delete whatever was previously inputted
-				document.getElementById("searchButton").value = ""
-				
-				//Show loading image
-				$('.animation_image').show(); 
-
-				//post page number and load returned data into result element
-				$.post('fetch_page.php', function(data) {
-		
-					$('.dataBody').load("fetch_page.php");
-					
-					//Hide loading image
-					$('.animation_image').hide(); //hide loading image once data is received
-	
-				});
-				
-				//update heatmap
-				//updateCoordinates();
-				
-			});
-		});
+                <script src="js/load_results.js"></script>
 		
 </script>
 	</body>

@@ -37,8 +37,8 @@ function updateCoordinates() {
 		    var geocoder =  new google.maps.Geocoder();
 			geocoder.geocode( { 'address': 'miami, us'}, function(results, status) {
 				if (status == google.maps.GeocoderStatus.OK) {
-					var lat = results[0].geometry.location.lat()
-					var lng = results[0].geometry.location.lng()); 
+					var lat = results[0].geometry.location.lat();
+					var lng = results[0].geometry.location.lng(); 
 				} else {
 					alert("Something got wrong " + status);
 				}
