@@ -17,21 +17,7 @@
 	</head>
 	<body>
 		<?php include("header.php") ?>
-		<div class="navbar navbar-default" role="navigation">
-			<div class="container-fluid">
-				<div class="navbar-header"></div>
-				<div class="navbar-collapse collapse">
-					<ul class="nav navbar-nav">
-						<li  class="active">
-							<a href="home.php">Home</a>
-						</li>
-						<li>
-							<a href="prototypePage.php">Prototype</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>			
+		
 		<div class="container">
 			<div class="row">
 				<h1>

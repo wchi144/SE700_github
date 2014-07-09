@@ -1,12 +1,3 @@
-<?php
-include("config.php");
-
-//Get the results from the query
-$results = mysqli_query($connecDB,"SELECT COUNT(*) FROM result");
-
-//Get an array of the records
-$get_total_rows = mysqli_fetch_array($results); 
-?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -21,29 +12,15 @@ $get_total_rows = mysqli_fetch_array($results);
 		<link rel="stylesheet" href="css/myCSS.css"></link>
 		
 		<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
-		<script src="js/googleMap.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>	
+                <script src="js/googleMap.js"></script>
+                
                 
 		
 	</head>
 	<body>
 		<?php include("header.php") ?>
-		<!--  NAVIGATION SECTION -->
-		<div class="navbar navbar-default" role="navigation">
-			<div class="container-fluid">
-				<div class="navbar-header"></div>
-				<div class="navbar-collapse collapse">
-					<ul class="nav navbar-nav">
-						<li>
-							<a href="home.php">Home</a>
-						</li>
-						<li class="active">
-							<a href="prototypePage.php">Prototype</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>	
+
 		
 		<div class="container">
 			<h2>
@@ -57,7 +34,9 @@ $get_total_rows = mysqli_fetch_array($results);
 					<input type="text" class="form-control" id="searchBox" placeholder="Text input">
 				</div>
 				<div class="col-md-1">
-					<button type="button" class="btn btn-primary" id="searchButton" onclick = "load_results()">Search</button>	
+					<button type="button" class="btn btn-primary" id="searchButton" onclick = "load_results()">Search</button>
+                                        
+                                        
 				</div>
 			</div>
 			<br>
@@ -119,8 +98,9 @@ $get_total_rows = mysqli_fetch_array($results);
 					<div id="map_canvas"></div>
 				</div>	
 				<!--  TABLE SECTION -->
+                                <button type="button" class="btn btn-primary" id="searchButton" onclick = "codeAddress()">Reload Map</button>
 				<div class="col-md-4">
-                                    <table class="table table-striped">
+                                    <table class="table table-striped" id="results_table">
                                         <thead>
                                                     <tr>
                                                         <th style="width:105px">
@@ -141,6 +121,7 @@ $get_total_rows = mysqli_fetch_array($results);
                                      <div class="animation_image" style="display:none; aligh:center;"><img src="images/ajax-loader.gif"> Loading...</div>
 				</div>
 			</div>
+                        <input type="button" value="data" onclick="showData()">
 
 			<hr></hr>
 			<?php include("footer.php") ?>

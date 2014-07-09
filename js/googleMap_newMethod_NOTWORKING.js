@@ -24,7 +24,7 @@ function initialize() {
 
 function updateCoordinates() {
 
-	var table = $("table tbody");
+    var table = $("table tbody");
     table.find('tr').each(function (i, el) {
         var $tds = $(this).find('td'),
             country = $tds.eq(0).text(),

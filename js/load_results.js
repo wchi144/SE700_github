@@ -1,11 +1,10 @@
 /* 
  * Load results of sql search
  */
-
 function load_results(){
 
     //Delete whatever was previously inputted
-    document.getElementById("searchButton").value = ""
+    document.getElementById("searchButton").value = "";
 
     //Show loading image
     $('.animation_image').show(); 
@@ -19,5 +18,4 @@ function load_results(){
         $('.animation_image').hide(); //hide loading image once data is received
 
     });
-}
-
+}  
