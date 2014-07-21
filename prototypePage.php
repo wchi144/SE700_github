@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="utf-8"></meta>
-		<meta content="IE=edge" http-equiv="X-UA-Compatible"></meta>
-		<meta content="width=device-width, initial-scale=1" name="viewport"></meta>
-		<meta content="" name="description"></meta>
-		<meta content="" name="author"></meta>
-		<link href="../../assets/ico/favicon.ico" rel="shortcut icon"></link>
-		<title></title>
-		<link rel="stylesheet" href="css/bootstrap.min.css"></link>
-		<link rel="stylesheet" href="css/myCSS.css"></link>
-		
-		<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>	
-                <script src="js/googleMap.js"></script>
-                
-                
-		
+            <meta charset="utf-8"></meta>
+            <meta content="IE=edge" http-equiv="X-UA-Compatible"></meta>
+            <meta content="width=device-width, initial-scale=1" name="viewport"></meta>
+            <meta content="" name="description"></meta>
+            <meta content="" name="author"></meta>
+            <link href="../../assets/ico/favicon.ico" rel="shortcut icon"></link>
+            <title></title>
+            <link rel="stylesheet" href="css/bootstrap.min.css"></link>
+            <link rel="stylesheet" href="css/myCSS.css"></link>
+
+            <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+            <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>	
+            <script src="js/googleMap.js"></script>
+            <script src="js/load_results.js"></script> 	
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
 	</head>
 	<body>
 		<?php include("header.php") ?>
-
 		
 		<div class="container">
 			<h2>
@@ -30,16 +29,32 @@
 				Enter an artist name in the search box and see their popularity distribution on the heatmap below
 			</p>
 			<div class="row">
-				<div class="col-md-11">
-					<input type="text" class="form-control" id="searchBox" placeholder="Text input">
+                          
+                            <!--<form  name="inputForm" method="post" >-->
+				<div class="col-md-11" id="inputForm">
+                                    
+                                        <input type="text" class="form-control" name="searchBox" id="searchBox" placeholder="Text input"/>
+  
 				</div>
+                                
 				<div class="col-md-1">
-					<button type="button" class="btn btn-primary" id="searchButton" onclick = "load_results()">Search</button>
-                                        
+					<button type="button" class="btn btn-primary" id="searchButton" onclick = "load_results()">Search</button>             
                                         
 				</div>
+                            <!--</form>-->
 			</div>
 			<br>
+                            <script language="javascript">
+                            /* 
+                             * Load results of sql search
+                             */
+
+                            //var input = document.getElementById("searchBox").value;
+
+                                
+
+                            </script>
+
 			
 			<!--  SUB RESULTS CHECKBOX SECTION -->
 			<div class="panel-group" id="accordion">
@@ -98,7 +113,7 @@
 					<div id="map_canvas"></div>
 				</div>	
 				<!--  TABLE SECTION -->
-                                <button type="button" class="btn btn-primary" id="searchButton" onclick = "codeAddress()">Reload Map</button>
+                                <button type="button" class="btn btn-primary" id="reloadMap" onclick = "codeAddress()">Reload Map</button>
 				<div class="col-md-4">
                                     <table class="table table-striped" id="results_table">
                                         <thead>
@@ -108,20 +123,23 @@
                                                         </th>
                                                         <th style="width:105px">
                                                                 City
-                                                        </th>
+                                                        </th>   
                                                         <th style="width:105px">
-                                                                People Count
+                                                                Lat, Lng
+                                                        </th>                                                         
+                                                        <th style="width:105px">
+                                                                Count
                                                         </th>
                                                     </tr>
                                         </thead>
-                                        <tbody class="dataBody">
+                                        <tbody class="dataBody" id="answer">
                                                    
                                         </tbody>
                                     </table>
                                      <div class="animation_image" style="display:none; aligh:center;"><img src="images/ajax-loader.gif"> Loading...</div>
 				</div>
 			</div>
-                        <input type="button" value="data" onclick="showData()">
+            <input type="button" value="data" onclick="showData()">
 
 			<hr></hr>
 			<?php include("footer.php") ?>
@@ -131,7 +149,7 @@
 		<script src="js/jquery-1.8.3.min.js"></script>
 		<script src="js/checkboxToogle.js"></script>
 		<script src="js/bootstrap-switch.min.js"></script>
-                <script src="js/load_results.js"></script>
+        
 		
 </script>
 	</body>

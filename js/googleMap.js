@@ -8,7 +8,7 @@ var taxiData = [
 function initialize() {
   geocoder = new google.maps.Geocoder();
   var mapOptions = {
-    zoom: 10,
+    zoom: 4,
     center: new google.maps.LatLng(-36.9097, 174.7713),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
@@ -28,30 +28,25 @@ function initialize() {
 //possible solution:
 //https://developers.google.com/maps/documentation/business/articles/usage_limits
 function codeAddress() {
+    
+    //Clear taxiData array on every new search
+    taxiData.length = 0
     //Get data from table
     var oTBL = document.getElementById('results_table');
     
     for (var x = 1; x < oTBL.rows.length; x++) {
-            country = oTBL.rows[x].cells[0].firstChild.data;
-            city = oTBL.rows[x].cells[1].firstChild.data;
-            ppl_cnt = oTBL.rows[x].cells[2].firstChild.data;
+            var country = oTBL.rows[x].cells[0].firstChild.data;
+            var city = oTBL.rows[x].cells[1].firstChild.data;
+            var latlong = oTBL.rows[x].cells[2].firstChild.data;
+            var ppl_cnt = oTBL.rows[x].cells[3].firstChild.data;
             
-            address = city+", "+country;
-            geocoder.geocode( { 'address': address}, function(results, status) {
-                if (status === google.maps.GeocoderStatus.OK) {
-                
-                //For the number of people, store the coordinates in taxiData array
-                for(var i=0; i<ppl_cnt;i++){
-                   taxiData.push(new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng())); 
-                }
-
-                } else {
-                  alert("Geocode was not successful for the following reason: " + status);
-                }
-                //Reload map
-                heatmap.setMap(map);
-            });    
+            var splitLatLng = latlong.split(",");
+            var lat = splitLatLng[0];
+            var long = splitLatLng[1];
+            
+            taxiData.push(new google.maps.LatLng(lat, long));
     } 
+    heatmap.setMap(map);
 }
   
 //Testing function to see what is in TaxiData
