@@ -1,45 +1,72 @@
 /* 
  * Load results of sql search
  */
-
-
 function load_results(){
 
     //Delete whatever was previously inputted
     //$input = document.getElementById("searchButton").value;
    
-     arguments0 = $("#inputForm input[name='searchBox']").val();
+    //arguments0 = $("#inputForm input[name='searchBox']").val();
 
-   $('.animation_image').show(); 
-  $.ajax({
-     type: "POST",
-     url: "fetch_page.php",
-     data: {arguments: arguments0},
-     success: function(data) {
-         //output. Result table
-      // $("#answer").html('<ul><li>'+data+'</li></ul>');    
-            //Show loading image
-       $(".dataBody").html(data);   
-       //$('.dataBody').load("fetch_page.php #answer");
-       //$('.dataBody').load ('fetch_page.php #answer', 'update=true').scrollTop(lastScrollPos);
-       $('.animation_image').hide(); 
-    }
-  });
-  return false;
+    
+    arguments0 = {
+    input: $("#inputForm input[name='searchBox']").val(),    
+    geotagged: $('#inlineCheckbox_geotagged:checked').val(),
+    profile: $('#inlineCheckbox_profile:checked').val(),
+    geoword: $('#inlineCheckbox_geoword:checked').val(),
+    networking: $('#inlineCheckbox_networking:checked').val(),
+    facebook: $('#inlineCheckbox_facebook:checked').val(),
+    twitter: $('#inlineCheckbox_twitter:checked').val()
+  };
+  
+    arguments1 = {
+        input: $("#inputForm input[name='searchBox']").val(),    
+        geotagged: $('#inlineCheckbox_geotagged:checked').val(),
+        profile: $('#inlineCheckbox_profile:checked').val(),
+        geoword: $('#inlineCheckbox_geoword:checked').val(),
+        networking: $('#inlineCheckbox_networking:checked').val()
+    };
+    
+    $.ajax({
+        type: "POST",
+        url: "search_inputs.php",
+        data: {arguments: arguments0},
+        success: function(data) {
+          $("#search_inputs").html(data);   
 
-//    //Show loading image
-//    $('.animation_image').show(); 
-//
-//
-//    //post page number and load returned data into result element
-//    $.post('fetch_page.php', function(data) {
-//
+        }
+    });
+	
+	$('.animation_image').show(); 
+    $('.animation_image_2').show();  
+	
+    $.ajax({
+        type: "POST",
+        url: "fetch_page.php",
+        data: {arguments: arguments0},
+        success: function(data) {
+          $(".dataBody").html(data);   
+          $('.animation_image').hide(); 
 //       // $('.dataBody').load("fetch_page.php");
 //         $('.dataBody').load ('fetch_page.php', 'update=true').scrollTop(lastScrollPos);
-//		
-//        //Hide loading image
-//        $('.animation_image').hide();
-//    });
+        }
+    });
+
+    if($('#inlineCheckbox_twitter:checked').val()==="twitter"){
+        $('#resulting_tweets').show();
+        $.ajax({
+            type: "POST",
+            url: "show_tweets.php",
+            data: {arguments: arguments1},
+            success: function(data) {   
+                $(".tweet_table_body").html(data);   
+                $('.animation_image_2').hide(); 
+
+            }
+        });
+    }
+
+    return false;
 
 }  
 

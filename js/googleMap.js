@@ -44,7 +44,10 @@ function codeAddress() {
             var lat = splitLatLng[0];
             var long = splitLatLng[1];
             
-            taxiData.push(new google.maps.LatLng(lat, long));
+            for (i = 0; i < ppl_cnt; i++) {
+                taxiData.push(new google.maps.LatLng(lat, long));
+            }
+            
     } 
     heatmap.setMap(map);
 }

@@ -25,11 +25,11 @@
                         <div class="navbar-collapse collapse">
                                 <ul class="nav navbar-nav">
                                     <?php 
-									$URL = $_SERVER["PHP_SELF"];
-									$contains_home   = '/home.php';
-									$contains_prototype   = '/prototypePage.php';
-									$pos_home = strpos($URL, $contains_home);
-									$pos_proto = strpos($URL, $contains_prototype);
+                                        $URL = $_SERVER["PHP_SELF"];
+                                        $contains_home   = '/home.php';
+                                        $contains_prototype   = '/prototypePage.php';
+                                        $pos_home = strpos($URL, $contains_home);
+                                        $pos_proto = strpos($URL, $contains_prototype);
 									
                                     if($pos_home !== false) {
                                     ?>
