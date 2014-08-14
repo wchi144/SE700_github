@@ -34,26 +34,6 @@ if (isset($_POST['arguments'])) {
             $input = $value;       
         }  
     }
-    echo "<strong>Searched for:</strong> $input<br>";
-    echo "<strong>Selected:</strong><br>";
-    if($geotagged){
-        echo "Geotagged<br>";
-    }
-    if($profile){
-        echo "Profile<br>";
-    }
-    if($geoword){
-        echo "Geoword<br>";
-    }
-    if($networking){
-        echo "Networking<br>";
-    }
-    if($facebook){
-        echo "Facebook<br>";
-    }
-    if($twitter){
-        echo "Twitter<br>";
-    }
 } else {   
     echo "Error: can't get input<br>";
 }
@@ -67,7 +47,6 @@ $query_profile_twitter = "";
 $query_geoword_twitter = "";
 $query_networking_twitter = "";
 
-echo "<strong>Queries</strong>:<br>";
 
 if($facebook){
     if($geotagged){
@@ -83,21 +62,25 @@ if($facebook){
     }
 } else if ($twitter){
 $try_query = "SELECT user_id FROM `post_twitter` where tweet_text LIKE '%".$input."%'";
-echo "$try_query<br>";
-$results = mysqli_query($connecDB, $try_query);
 
+
+$results = mysqli_query($connecDB, $try_query);
+$tweet_count = mysqli_num_rows($results);
+echo "<strong>Resulting Tweet Count</strong>: $tweet_count<br>";
+$count = 0;
 while($row = mysqli_fetch_array($results))
 {
 	$user_id = $row['user_id'];
         $city = "None";
+        
 
         if($geotagged){
             $query = "SELECT * FROM api_twitter WHERE user_id=".$user_id;
-            echo "<br>$query<br>";
             $outputs = mysqli_query($connecDB, $query);
             if(mysqli_num_rows($outputs) != 0){
                 while($row_inner = mysqli_fetch_array($outputs)){    
                     $city = $row_inner['city'];
+                   
                 }                
             }
 
@@ -105,44 +88,49 @@ while($row = mysqli_fetch_array($results))
         
         if($city == "None" && $profile){
             $query = "SELECT profile_twitter.location_id, locations.city, locations.country, locations.geo_lat, locations.geo_long FROM profile_twitter JOIN locations ON profile_twitter.location_id = locations.location_id WHERE profile_twitter.`user_id` =".$user_id;
-            echo "<br>$query<br>";
             $outputs = mysqli_query($connecDB, $query);
             if(mysqli_num_rows($outputs) != 0){
                 while($row_inner = mysqli_fetch_array($outputs)){      
                     $city = $row_inner['city'];
+                   
                 } 
             }
         }
  
         if($city == "None" && $geoword){
             $query = "SELECT geoword.location_id, locations.city, locations.country, locations.geo_lat, locations.geo_long FROM geoword JOIN locations ON geoword.location_id = locations.location_id WHERE geoword.`user_id` =".$user_id;
-            echo "<br>$query<br>";
             $outputs = mysqli_query($connecDB, $query);
             if(mysqli_num_rows($outputs) != 0){
                 while($row_inner = mysqli_fetch_array($outputs)){     
                     $city = $row_inner['city'];
+                  
                 }     
             }
         }
 
         if($city == "None" && $networking){
             $query = "SELECT networking.location_id, locations.city, locations.country, locations.geo_lat, locations.geo_long FROM networking JOIN locations ON networking.location_id = locations.location_id WHERE networking.`user_id` =".$user_id;
-            echo "<br>$query<br>";
             $outputs = mysqli_query($connecDB, $query);
             if(mysqli_num_rows($outputs) != 0){
                 while($row_inner = mysqli_fetch_array($outputs)){      
                     $city = $row_inner['city'];
-
+                    
                 } 
             }
         }
         
         if($city=="None" || empty($city)){
             continue;
+        } else {
+            $count = $count + 1;
         }
+        
 }
 }else {
     //WRONG SHOULDN"T BE HERE
 }
 
+echo "<strong>Result Count</strong>: $count<br>";
+$coverage = $count/$tweet_count*100;
+echo "<strong>Coverage Percentage</strong> (result_cnt/tweet): $coverage%<br>";
 

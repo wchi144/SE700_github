@@ -112,6 +112,7 @@
 						<li class="active"><a href="#results" data-toggle="tab">Results</a></li>
 						<li><a href="#tweets" data-toggle="tab">Tweets</a></li>
 						<li><a href="#inputs" data-toggle="tab">Inputs</a></li>
+                                                <li><a href="#outputs" data-toggle="tab">Outputs</a></li>
 						</ul>
 					</div>
 					
@@ -145,16 +146,16 @@
 							</div>
 							
 							<div class="tab-pane" id="tweets">
-								<table class="table table-striped">
+								<table class="table table-striped" id="tweet_table">
 									<thead>
-												<tr>
-													<th style="width:105px">
-															user_id
-													</th>
-													<th style="width:105px">
-															tweet_text
-													</th>   
-												</tr>
+                                                                            <tr>
+                                                                                    <th style="width:105px">
+                                                                                                    user_id
+                                                                                    </th>
+                                                                                    <th style="width:105px">
+                                                                                                    tweet_text
+                                                                                    </th>   
+                                                                            </tr>
 									</thead>
 									<tbody class="tweet_table_body" id="tweet_table_body">                    
 									</tbody>  
@@ -164,6 +165,9 @@
 							
 							<div class="tab-pane" id="inputs">
 								<div class="panel-group" id="search_inputs"></div>
+							</div>
+                                                        <div class="tab-pane" id="outputs">
+								<div class="panel-group" id="search_outputs"></div>
 							</div>
 
 						</div>

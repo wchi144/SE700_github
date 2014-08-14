@@ -53,6 +53,7 @@ if(empty($input)){
     exit("Error: Please input a search word");  
 }
 
+//Query building section
 if($facebook){
     if($geotagged){
         $query_geotagged_fb = "";
@@ -65,97 +66,92 @@ if($facebook){
     } else {
         //WRONG SHOULDN"T BE HERE
     }
-} else if ($twitter){
-    //in decending order or accuracy
-    if($networking){
-        //SELECT networking.user_id, post_twitter.tweet_text, locations.city, locations.country, locations.geo_lat, locations.geo_long, COUNT(*) as PeopleCount FROM networking JOIN post_twitter ON post_twitter.user_id = networking.user_id JOIN locations ON locations.location_id = networking.location_id WHERE post_twitter.tweet_text LIKE '%one direction%' AND locations.city!='None' GROUP BY locations.city, locations.country
-        $final_query = "SELECT networking.user_id, post_twitter.tweet_text, locations.city, locations.country, locations.geo_lat, locations.geo_long, COUNT(*) as PeopleCount "
-                . "FROM networking "
-                . "JOIN post_twitter ON post_twitter.user_id = networking.user_id "
-                . "JOIN locations ON locations.location_id = networking.location_id "
-                . "WHERE post_twitter.tweet_text LIKE '%".$input."%' "
-                . "AND locations.city!='None' "
-                . "GROUP BY locations.city, locations.country";
-    }     
-    if ($geoword){
-        //SELECT geoword.user_id, post_twitter.tweet_text, locations.city, locations.country, locations.geo_lat, locations.geo_long, COUNT(*) as PeopleCount FROM geoword JOIN post_twitter ON post_twitter.user_id = geoword.user_id JOIN locations ON locations.location_id = geoword.location_id WHERE post_twitter.tweet_text LIKE '%one direction%' AND locations.city!='None' GROUP BY locations.city, locations.country
-        $final_query = "SELECT geoword.user_id, post_twitter.tweet_text, locations.city, locations.country, locations.geo_lat, locations.geo_long, COUNT(*) as PeopleCount "
-                . "FROM geoword "
-                . "JOIN post_twitter ON post_twitter.user_id = geoword.user_id "
-                . "JOIN locations ON locations.location_id = geoword.location_id "
-                . "WHERE post_twitter.tweet_text LIKE '%".$input."%' "
-                . "AND locations.city!='None' "
-                . "GROUP BY locations.city, locations.country";
-    }   
-    if ($profile){
-        //$query_profile_twitter
-        //SELECT profile_twitter.user_id, post_twitter.tweet_text, locations.city, locations.country, locations.geo_lat, locations.geo_long, COUNT(*) as PeopleCount FROM profile_twitter JOIN post_twitter ON post_twitter.user_id = profile_twitter.user_id JOIN locations ON locations.location_id = profile_twitter.location_id WHERE post_twitter.tweet_text LIKE '%".$input."%' AND locations.city!='None' GROUP BY locations.city, locations.country
-        $final_query ="SELECT profile_twitter.user_id, post_twitter.tweet_text, locations.city, locations.country, locations.geo_lat, locations.geo_long, COUNT(*) as PeopleCount "
-                . "FROM profile_twitter "
-                . "JOIN post_twitter "
-                . "ON post_twitter.user_id = profile_twitter.user_id "
-                . "JOIN locations "
-                . "ON locations.location_id = profile_twitter.location_id "
-                . "WHERE post_twitter.tweet_text LIKE '%".$input."%' AND locations.city!='None' "
-                . "GROUP BY locations.city, locations.country";
-    }    
-    if($geotagged){
-        //$query_geotagged_twitter
-        $final_query = "SELECT api_twitter.*, post_twitter.tweet_text, COUNT(*) as PeopleCount "
-                . "FROM api_twitter "
-                . "INNER JOIN post_twitter "
-                . "ON api_twitter.user_id=post_twitter.user_id "
-                . "WHERE post_twitter.tweet_text LIKE '%".$input."%' AND city!='None'"
-                . "GROUP BY api_twitter.city, api_twitter.country";
+} 
+//check that final_query is not empty. Which means user did not choose a result type. NOT NEEDED FOR TWITTER
+//if($final_query==""){
+    //exit("Exit due to empty query. Select a result type from result filter");  
+//}
 
-        
-        //Get city and country on demand
-//        $final_query = "SELECT api_twitter.*, post_twitter.tweet_text "
-//                . "FROM api_twitter "
-//                . "INNER JOIN post_twitter "
-//                . "ON api_twitter.user_id=post_twitter.user_id "
-//                . "WHERE post_twitter.tweet_text LIKE '%".$input."%'";
-    } 
+$twitter_query = "SELECT user_id FROM `post_twitter` where tweet_text LIKE '%".$input."%'";
 
-}else {
-    exit("Exit due to empty query. Select a SNS from result filter");  
-}
-
-//check that final_query is not empty. Which means user did not choose a result type
-if($final_query==""){
-    exit("Exit due to empty query. Select a result type from result filter");  
-}
-
-$results = mysqli_query($connecDB, $final_query);
+$results = mysqli_query($connecDB, $twitter_query);
 
 //Output results from database
 echo '<table class="result">';
 while($row = mysqli_fetch_array($results))
 {
-	
-    
-	$lat = $row['geo_lat'];
-	$long = $row['geo_long'];        
-	$city = $row['city'];
-	$country = $row['country'];
-        $cnt = $row['PeopleCount'];
-        //$cnt = "1";
-        
-        if($city=="None" && $country=="None"){
-            $address = geolonglat($lat, $long);
-            $city = $address[0];
-            $country = $address[1]; 
-            //Add city and country to database
-            mysqli_query($connecDB,"UPDATE api_twitter SET city = '".$city."' WHERE user_id = ".$user_id);
-            mysqli_query($connecDB,"UPDATE api_twitter SET country = '".$country."' WHERE user_id = ".$user_id);        
+	$user_id = $row['user_id'];
+        $city = "None";
+        //echo $user_id;
+
+        if($geotagged){
+            $query = "SELECT * FROM api_twitter WHERE user_id=".$user_id;
+            $outputs = mysqli_query($connecDB, $query);
+            if(mysqli_num_rows($outputs) != 0){
+                while($row_inner = mysqli_fetch_array($outputs)){
+                    $lat = $row_inner['geo_lat'];
+                    $long = $row_inner['geo_long'];        
+                    $city = $row_inner['city'];
+                    $country = $row_inner['country'];
+                    $cnt = "1";
+                }                
+            }
+
         }
-	
+        
+        if($city == "None" && $profile){
+            $query = "SELECT profile_twitter.location_id, locations.city, locations.country, locations.geo_lat, locations.geo_long FROM profile_twitter JOIN locations ON profile_twitter.location_id = locations.location_id WHERE profile_twitter.`user_id` =".$user_id;
+            $outputs = mysqli_query($connecDB, $query);
+            if(mysqli_num_rows($outputs) != 0){
+                while($row_inner = mysqli_fetch_array($outputs)){
+                    $lat = $row_inner['geo_lat'];
+                    $long = $row_inner['geo_long'];        
+                    $city = $row_inner['city'];
+                    $country = $row_inner['country'];
+                    $cnt = "1";
+                } 
+            }
+        }
+ 
+        if($city == "None" && $geoword){
+            $query = "SELECT geoword.location_id, locations.city, locations.country, locations.geo_lat, locations.geo_long FROM geoword JOIN locations ON geoword.location_id = locations.location_id WHERE geoword.`user_id` =".$user_id;
+            $outputs = mysqli_query($connecDB, $query);
+            if(mysqli_num_rows($outputs) != 0){
+                while($row_inner = mysqli_fetch_array($outputs)){
+                    $lat = $row_inner['geo_lat'];
+                    $long = $row_inner['geo_long'];        
+                    $city = $row_inner['city'];
+                    $country = $row_inner['country'];
+                    $cnt = "1";
+                }     
+            }
+        }
+
+        if($city == "None" && $networking){
+            $query = "SELECT networking.location_id, locations.city, locations.country, locations.geo_lat, locations.geo_long FROM networking JOIN locations ON networking.location_id = locations.location_id WHERE networking.`user_id` =".$user_id;
+            $outputs = mysqli_query($connecDB, $query);
+            if(mysqli_num_rows($outputs) != 0){
+                while($row_inner = mysqli_fetch_array($outputs)){
+                    $lat = $row_inner['geo_lat'];
+                    $long = $row_inner['geo_long'];        
+                    $city = $row_inner['city'];
+                    $country = $row_inner['country'];
+                    $cnt = "1";
+                } 
+            }
+        }
+        
+        if($city=="None" || empty($city)){
+            continue;
+        }
+        
 	echo '<tr>';
 	echo '<td>' . $country . '</td><td>' . $city . '</td><td>' . $lat.', '.$long . '</td><td>' . $cnt . '</td>';
 	echo '</tr>';
 }
 echo '</table>';
 
+//Function to get city and country name using long and lat. Limit of 2500 per day.
 function geolonglat($lat, $long){
     $attemps = 0;
     $success = False;
