@@ -1,10 +1,6 @@
 <?php
 include("config.php"); 
 
-require_once('sdk/src/facebook.php');
-
-
-
 $input = "";
 $geotagged = False;
 $profile = False;
