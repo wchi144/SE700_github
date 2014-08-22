@@ -14,7 +14,8 @@
         <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>	
         <script src="js/googleMap.js"></script>
-        <script src="js/load_results.js"></script> 	
+        <script src="js/load_results.js"></script>   
+        <script src="js/table_cnt.js"></script> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     </head>
     <body>
@@ -178,7 +179,7 @@
 			</div>
                 
 			<input type="button" value="data" onclick="showData()">
-			
+			<input type="button" value="counts" onclick="table_cnt()">
 			<hr></hr>
 			<?php include("footer.php") ?>
         </div>
@@ -188,6 +189,7 @@
         <script src="js/jquery-1.8.3.min.js"></script>
         <script src="js/checkboxToogle.js"></script>
         <script src="js/bootstrap-switch.min.js"></script>
+        
 
     </body>
 </html>

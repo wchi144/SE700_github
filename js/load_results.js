@@ -8,6 +8,7 @@ function load_results(){
    
     //arguments0 = $("#inputForm input[name='searchBox']").val();
 
+    
     arguments0 = {
     input: $("#inputForm input[name='searchBox']").val(),    
     geotagged: $('#inlineCheckbox_geotagged:checked').val(),
@@ -47,7 +48,7 @@ function load_results(){
     });
 	
     $('.animation_image').show(); 
-    $('.animation_image_2').show();  
+    
 	
     $.ajax({
         type: "POST",
@@ -64,6 +65,7 @@ function load_results(){
     });
 
     if($('#inlineCheckbox_twitter:checked').val()==="twitter"){
+        $('.animation_image_2').show();  
         $('#resulting_tweets').show();
         $.ajax({
             type: "POST",
@@ -72,17 +74,6 @@ function load_results(){
             success: function(data) {   
                 $(".tweet_table_body").html(data);   
                 $('.animation_image_2').hide(); 
-                        
-                        
-//                //Get number of results and display in output tab
-//                var count = $('#results_table tr').length - 1;
-//                var results = "<strong>Row counts</strong>: "+count;
-//
-//                //Get number of tweets and display in output tab
-//                var count_tweets = $('#tweet_table_body tr').length;
-//                var results_tweet = "<br><strong>Total tweet counts</strong>: "+count_tweets;
-//
-//                $("#search_outputs").html(results+results_tweet); 
 
             }
         });
