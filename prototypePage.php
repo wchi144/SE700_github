@@ -113,7 +113,7 @@
 						<li class="active"><a href="#results" data-toggle="tab">Results</a></li>
 						<li><a href="#tweets" data-toggle="tab">Tweets</a></li>
 						<li><a href="#inputs" data-toggle="tab">Inputs</a></li>
-                                                <li><a href="#outputs" data-toggle="tab">Outputs</a></li>
+                        <li><a href="#outputs" data-toggle="tab">Outputs</a></li>
 						</ul>
 					</div>
 					
@@ -167,7 +167,7 @@
 							<div class="tab-pane" id="inputs">
 								<div class="panel-group" id="search_inputs"></div>
 							</div>
-                                                        <div class="tab-pane" id="outputs">
+                            <div class="tab-pane" id="outputs">
 								<div class="panel-group" id="search_outputs"></div>
 							</div>
 
