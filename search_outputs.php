@@ -59,11 +59,10 @@ $query_networking_twitter = "";
 
 
 if($facebook){
-    $input_fb = str_replace(' ', '', $input);    
     //SELECT user_id FROM profile_fb WHERE artist LIKE "%katyperry%"
     $fb_query = "SELECT user_id "
             . "FROM profile_fb "
-            . "WHERE artist LIKE '%".$input_fb."%'";
+            . "WHERE artist LIKE '%".$input."%'";
 
     $result_fb = mysqli_query($connecDB, $fb_query);
     $fb_total_cnt = mysqli_num_rows($result_fb);

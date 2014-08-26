@@ -34,7 +34,26 @@ function table_cnt(){
 
         }
     }
+    sortTable();
 }
+
+function sortTable(){
+    var tbl = document.getElementById("results_table").tBodies[0];
+    var store = [];
+    for(var i=0, len=tbl.rows.length; i<len; i++){
+        var row = tbl.rows[i];
+        var sortnr = parseFloat(row.cells[3].textContent || row.cells[3].innerText);
+        if(!isNaN(sortnr)) store.push([sortnr, row]);
+    }
+    store.sort(function(x,y){
+        return y[0] - x[0];
+    });
+    for(var i=0, len=store.length; i<len; i++){
+        tbl.appendChild(store[i][1]);
+    }
+    store = null;
+}
+
 //function handling button click
 function plusClick(e){
     var collapsed = $(this).hasClass('collapsed');
