@@ -157,7 +157,18 @@ while($row = mysqli_fetch_array($results))
         }
     }
 
-
+    if($networking){
+        $query = "SELECT networking.location_id, locations.city, locations.country, locations.geo_lat, locations.geo_long FROM networking JOIN locations ON networking.location_id = locations.location_id WHERE networking.`user_id` =".$user_id;
+        $outputs = mysqli_query($connecDB, $query);
+        if(mysqli_num_rows($outputs) != 0){
+            while($row_inner = mysqli_fetch_array($outputs)){      
+                $city = $row_inner['city'];
+                if($city!="None" || !empty($city)){
+                    $tw_network_cnt = $tw_network_cnt + 1; 
+                } 
+            } 
+        }
+    }
 
     if($geoword){
         $query = "SELECT geoword.location_id, locations.city, locations.country, locations.geo_lat, locations.geo_long FROM geoword JOIN locations ON geoword.location_id = locations.location_id WHERE geoword.`user_id` =".$user_id;
@@ -174,18 +185,7 @@ while($row = mysqli_fetch_array($results))
     }
 
 
-    if($networking){
-        $query = "SELECT networking.location_id, locations.city, locations.country, locations.geo_lat, locations.geo_long FROM networking JOIN locations ON networking.location_id = locations.location_id WHERE networking.`user_id` =".$user_id;
-        $outputs = mysqli_query($connecDB, $query);
-        if(mysqli_num_rows($outputs) != 0){
-            while($row_inner = mysqli_fetch_array($outputs)){      
-                $city = $row_inner['city'];
-                if($city!="None" || !empty($city)){
-                    $tw_network_cnt = $tw_network_cnt + 1; 
-                } 
-            } 
-        }
-    }
+
         
 }
 }else {

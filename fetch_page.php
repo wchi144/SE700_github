@@ -98,21 +98,7 @@ if($twitter){
                     } 
                 }
             }
-
-            if($city == "None" && $geoword){
-                $query = "SELECT geoword.location_id, locations.city, locations.country, locations.geo_lat, locations.geo_long FROM geoword JOIN locations ON geoword.location_id = locations.location_id WHERE geoword.`user_id` =".$user_id;
-                $outputs = mysqli_query($connecDB, $query);
-                if(mysqli_num_rows($outputs) != 0){
-                    while($row_inner = mysqli_fetch_array($outputs)){
-                        $lat = $row_inner['geo_lat'];
-                        $long = $row_inner['geo_long'];        
-                        $city = $row_inner['city'];
-                        $country = $row_inner['country'];
-                        $cnt = "1";
-                    }     
-                }
-            }
-
+ 
             if($city == "None" && $networking){
                 $query = "SELECT networking.location_id, locations.city, locations.country, locations.geo_lat, locations.geo_long FROM networking JOIN locations ON networking.location_id = locations.location_id WHERE networking.`user_id` =".$user_id;
                 $outputs = mysqli_query($connecDB, $query);
@@ -124,6 +110,20 @@ if($twitter){
                         $country = $row_inner['country'];
                         $cnt = "1";
                     } 
+                }
+            }
+            
+            if($city == "None" && $geoword){
+                $query = "SELECT geoword.location_id, locations.city, locations.country, locations.geo_lat, locations.geo_long FROM geoword JOIN locations ON geoword.location_id = locations.location_id WHERE geoword.`user_id` =".$user_id;
+                $outputs = mysqli_query($connecDB, $query);
+                if(mysqli_num_rows($outputs) != 0){
+                    while($row_inner = mysqli_fetch_array($outputs)){
+                        $lat = $row_inner['geo_lat'];
+                        $long = $row_inner['geo_long'];        
+                        $city = $row_inner['city'];
+                        $country = $row_inner['country'];
+                        $cnt = "1";
+                    }     
                 }
             }
 

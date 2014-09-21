@@ -14,7 +14,7 @@
 		<script src="js/skel-layers.min.js"></script>
 		<script src="js/init.js"></script>
 
-<!--        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>        -->
+        <!--        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>        -->
         <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>	
         <script src="js/table_cnt.js"></script>
@@ -249,6 +249,14 @@
 				</div>		
 			</section>
 		</article>
+                <!--Make enter key also trigger search button-->
+                <script type="text/javascript">                
+                    $("#searchBox").keyup(function(event){
+                        if(event.keyCode == 13){
+                            $("#searchButton").click();
+                        }
+                    });
+                </script>
 
 		<!-- Footer -->
 		<footer id="footer">

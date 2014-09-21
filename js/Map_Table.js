@@ -64,7 +64,7 @@ function codeAddress() {
     } 
     //heatmap.setMap(map);
 }
-  
+
 //Testing function to see what is in TaxiData
 function showData(){
     alert(taxiData);
@@ -113,18 +113,6 @@ function HomeControl(controlDiv, map) {
   // Setting padding to 5 px will offset the control
   // from the edge of the map
   controlDiv.style.padding = '6px';
-
-  // Set CSS for the control border
-//  var controlUI = document.createElement('div');
-//  controlUI.style.backgroundColor = '#83d3c9';
-//  controlUI.style.borderColor = "#83d3c9";
-//  controlUI.style.width = "36px";
-//  controlUI.style.height = "36px";
-//  controlUI.style.cursor = 'pointer';
-//  controlUI.style.textAlign = 'center';
-//  controlUI.style.verticalAlign = "middle";
-//  controlUI.title = 'Reload Map';
-//  controlDiv.appendChild(controlUI);
   
   var controlContent = document.createElement('button');
   controlContent.title = 'Reload Map';
@@ -150,7 +138,7 @@ function HomeControl(controlDiv, map) {
   });
 
 }
-
+//Back up to reload map for backup "Map" button in prototypePage
 function showMap() {
     
     //Clear taxiData array on every new search
@@ -270,7 +258,9 @@ function load_results_1(){
     return false;
 
 }  
-
+//Control the timing. Load_reuslts_1 takes input from prototypePage.php and create table
+//codeAddress pulls the data out of the table and store into array with is used for Google heat map
+//heatmap.setMap() then reload the map
 function load_results(){
     load_results_1();
     setTimeout(function(){
