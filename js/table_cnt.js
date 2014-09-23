@@ -1,5 +1,5 @@
 /*
-* Sorts the table contents in descending order of the number of counts in each city
+* Sort the table contents in descending order of the number of counts in each city
 * By Shiyi Zhang and Wei-Ling Chin
 */
 function table_cnt(){

@@ -1,5 +1,5 @@
 /*
-* Defines the animations used in the prototypePage.php, including the dropdown toggle menu, checkbox selections and tab menu transitions
+* Define the animations used in the prototypePage.php, including the dropdown toggle menu, checkbox selections and tab menu transitions
 * By Shiyi Zhang and Wei-Ling Chin
 * 
 */
