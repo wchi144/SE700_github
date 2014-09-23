@@ -1,5 +1,6 @@
-/* 
- * Load results of sql search
+/*
+ * Loads results of sql search to show on the heat map
+ * By Shiyi Zhang and Wei-Ling Chin
  */
 // Adding 500 Data Points
 var map, pointarray, heatmap, geocode;
@@ -8,35 +9,28 @@ var taxiData = [
   //new google.maps.LatLng(37.782551, -122.445368),
 ];
 
+// Initialize the heat map
 function initialize() {
   geocoder = new google.maps.Geocoder();
   var mapOptions = {
     zoom: 2,
-    //center: new google.maps.LatLng(-36.9097, 174.7713),
     center: new google.maps.LatLng(-0.0000, -160.0000),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
 
+  //Show the map in the map_canvas div created in the prototypePage.php
   map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
   
-//  var homeControlDiv = document.createElement('div');
-//  var homeControl = new HomeControl(homeControlDiv, map);
-//  homeControlDiv.index = 1;
-//  
-//  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(homeControlDiv);
-  
+  //Add a heat map layer on the map
   var pointArray = new google.maps.MVCArray(taxiData);
-  
   heatmap = new google.maps.visualization.HeatmapLayer({data: pointArray});
 
+  //Show the heat map
   heatmap.setMap(map);
-  
-  
-  
 }
-//google.maps.event.addDomListener(window, 'load', initialize);
+
 //Function to get data from table and store in TaxiData array which is then used
-//to creat the heatmap. Reload map after each iteration of table (which should 
+//to create the heat map. Reload map after each iteration of table (which should 
 //only be once). Google map has OVER_QUERY_LIMIT
 //possible solution:
 //https://developers.google.com/maps/documentation/business/articles/usage_limits
@@ -44,25 +38,24 @@ function codeAddress() {
     
     //Clear taxiData array on every new search
     taxiData.length = 0
+	
     //Get data from table
     var oTBL = document.getElementById('results_table');
     
     for (var x = 1; x < oTBL.rows.length; x++) {
-            var country = oTBL.rows[x].cells[0].firstChild.data;
-            var city = oTBL.rows[x].cells[1].firstChild.data;
-            var latlong = oTBL.rows[x].cells[2].firstChild.data;
-            var ppl_cnt = oTBL.rows[x].cells[3].firstChild.data;
+        var country = oTBL.rows[x].cells[0].firstChild.data;
+        var city = oTBL.rows[x].cells[1].firstChild.data;
+        var latlong = oTBL.rows[x].cells[2].firstChild.data;
+        var ppl_cnt = oTBL.rows[x].cells[3].firstChild.data;
             
-            var splitLatLng = latlong.split(",");
-            var lat = splitLatLng[0];
-            var long = splitLatLng[1];
+        var splitLatLng = latlong.split(",");
+        var lat = splitLatLng[0];
+        var long = splitLatLng[1];
             
-            for (i = 0; i < ppl_cnt; i++) {
-                taxiData.push(new google.maps.LatLng(lat, long));
-            }
-            
+        for (i = 0; i < ppl_cnt; i++) {
+			taxiData.push(new google.maps.LatLng(lat, long));
+        }   
     } 
-    //heatmap.setMap(map);
 }
 
 //Testing function to see what is in TaxiData
@@ -231,11 +224,7 @@ function load_results_1(){
         data: {arguments: arguments0},
         success: function(data) {
           $(".dataBody").html(data);   
-          $('.animation_image').hide(); 
-//       // $('.dataBody').load("fetch_page.php");
-//         $('.dataBody').load ('fetch_page.php', 'update=true').scrollTop(lastScrollPos);
-
-
+          $('.animation_image').hide();
         }
     });
 
@@ -253,11 +242,10 @@ function load_results_1(){
             }
         });
     }
-    
-
     return false;
 
 }  
+
 //Control the timing. Load_reuslts_1 takes input from prototypePage.php and create table
 //codeAddress pulls the data out of the table and store into array with is used for Google heat map
 //heatmap.setMap() then reload the map
@@ -266,6 +254,8 @@ function load_results(){
     setTimeout(function(){
         codeAddress();
     }, 10000);
+	
+	//The heat map will show after a 10s delay
     setTimeout(function(){
         heatmap.setMap(map);
     }, 10000);

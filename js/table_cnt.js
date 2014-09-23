@@ -1,11 +1,12 @@
-/**
-
+/*
+* Sorts the table contents in descending order of the number of counts in each city
+* By Shiyi Zhang and Wei-Ling Chin
 */
 function table_cnt(){
     var table = document.getElementById('results_table');
     var rowGroups = {};
 
-    //loop through the rows excluding the first row (the header row)
+    // Loop through the rows excluding the first row (the header row)
     while(table.rows.length > 1){
         var row = table.rows[1];
         var id = $(row.cells[0]).text()+$(row.cells[1]).text();
@@ -18,7 +19,7 @@ function table_cnt(){
         rowGroups[id].push(row);
         table.deleteRow(1);
     }
-    //loop through the row groups to build the new table content
+    // Loop through the row groups to build the new table content
     for(var id in rowGroups){
         var group = rowGroups[id];
 
@@ -28,17 +29,16 @@ function table_cnt(){
             if(group.length > 1 && j == 0) {   
                 //add + button
                 var lastCell = row.cells[row.cells.length - 1];
-                lastCell.innerHTML = group.length; 
-                //$("<span class='collapsed'>").appendTo(lastCell).click(plusClick); 
+                lastCell.innerHTML = group.length;  
             }
 
             table.tBodies[0].appendChild(row);       
-
         }
     }
     sortTable();
 }
 
+// Sort the table according to the number of counts in descending order
 function sortTable(){
     var tbl = document.getElementById("results_table").tBodies[0];
     var store = [];
@@ -56,7 +56,7 @@ function sortTable(){
     store = null;
 }
 
-//function handling button click
+// Function handling button click
 function plusClick(e){
     var collapsed = $(this).hasClass('collapsed');
     var fontSize = collapsed ? 14 : 0;
