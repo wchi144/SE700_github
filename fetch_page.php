@@ -1,3 +1,6 @@
+<!--Fetch Page-->
+<!--Fetch results for both Twitter and Facebook from database depending on the user input-->
+<!--by Shiyi Zhang and Wei-Ling Chin-->
 <?php
 include("config.php"); 
 
@@ -53,10 +56,7 @@ if(empty($input)){
     exit("Error: Please input a search word");  
 }
 
-//check that final_query is not empty. Which means user did not choose a result type. NOT NEEDED FOR TWITTER
-//if($final_query==""){
-    //exit("Exit due to empty query. Select a result type from result filter");  
-//}
+//Get twitter results
 if($twitter){
     $twitter_query = "SELECT user_id FROM `post_twitter` where tweet_text LIKE '%".$input."%'";
 
@@ -138,6 +138,7 @@ if($twitter){
     echo '</table>';
 }
 
+//Get facebook results
 if($facebook){
     //SELECT user_id FROM profile_fb WHERE artist LIKE "%katyperry%"
     $fb_query = "SELECT user_id "

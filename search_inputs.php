@@ -1,3 +1,7 @@
+<!--Search Inputs-->
+<!--Display input variables in inputs tab of Results Tabs section in prototypePage.php-->
+<!--(Test and Checking Purposes)-->
+<!--by Shiyi Zhang and Wei-Ling Chin-->
 <?php
 include("config.php"); 
 
@@ -9,7 +13,7 @@ $networking = False;
 $facebook = False;
 $twitter = False;
 
-// Check if we have user input from prototypePage.php
+// Check for user input from prototypePage.php
 if (isset($_POST['arguments'])) {
 
     foreach($_POST['arguments'] as $key => $value){ 
@@ -69,19 +73,58 @@ $query_networking_twitter = "";
 
 echo "<strong>Queries</strong>:<br>";
 
+
 if($facebook){
-    if($geotagged){
-        $query_geotagged_fb = "";
-    } elseif ($profile){
-        //$query_profile_fb =;
-    } elseif ($geoword){
-        //$query_geoword_fb =;
-    }elseif ($networking){
-        //$query_networking_fb =;
-    } else {
-        //WRONG SHOULDN"T BE HERE
-    }
+    //results for facebook
+    //SELECT user_id FROM profile_fb WHERE artist LIKE "%katyperry%"
+    $fb_query = "SELECT user_id "
+            . "FROM profile_fb "
+            . "WHERE artist LIKE '%".$input."%'";
+
+    $result_fb = mysqli_query($connecDB, $fb_query);
+
+    while($row_fb = mysqli_fetch_array($result_fb))
+    {
+            $user_id = $row_fb['user_id'];
+            $city = "None";
+
+            if($profile){
+                $query = "SELECT profile_fb.location_id, locations.city, locations.country, locations.geo_lat, locations.geo_long "
+                        . "FROM profile_fb "
+                        . "JOIN locations ON profile_fb.location_id = locations.location_id "
+                        . "WHERE profile_fb.`user_id` =".$user_id;
+                echo "<br>$query<br>";
+                $outputs = mysqli_query($connecDB, $query);
+                if(mysqli_num_rows($outputs) != 0){
+                    while($row_inner = mysqli_fetch_array($outputs)){      
+                        $city = $row_inner['city'];
+                    }                
+                }
+
+            }
+
+            if($city == "None" && $networking){
+                $query = "SELECT networking_fb.location_id, locations.city, locations.country, locations.geo_lat, locations.geo_long "
+                        . "FROM networking_fb "
+                        . "JOIN locations ON networking_fb.location_id = locations.location_id "
+                        . "WHERE networking_fb.`user_id` =".$user_id;
+                echo "<br>$query<br>";
+                $outputs = mysqli_query($connecDB, $query);
+                if(mysqli_num_rows($outputs) != 0){
+                    while($row_inner = mysqli_fetch_array($outputs)){      
+                        $city = $row_inner['city'];
+                    } 
+                }
+            }
+            
+            if($city=="None" || empty($city)){
+                continue;
+            }
+
+    }        
+
 } else if ($twitter){
+    //results for twitter
 $try_query = "SELECT user_id FROM `post_twitter` where tweet_text LIKE '%".$input."%'";
 echo "$try_query<br>";
 $results = mysqli_query($connecDB, $try_query);
@@ -143,7 +186,7 @@ while($row = mysqli_fetch_array($results))
         }
 }
 }else {
-    //WRONG SHOULDN"T BE HERE
+    //SHOULDN"T BE HERE
 }
 
 

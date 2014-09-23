@@ -1,3 +1,5 @@
+<!--Home Page-->
+<!--by Shiyi Zhang and Wei-Ling Chin-->
 <!DOCTYPE HTML>
 <html>
 	<head>

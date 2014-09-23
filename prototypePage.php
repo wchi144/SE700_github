@@ -1,3 +1,6 @@
+<!--Main Page-->
+<!--The prototype page where input is obtained and output is displayed in a form of a heat map.-->
+<!--by Shiyi Zhang and Wei-Ling Chin-->
 <!DOCTYPE HTML>
 <html>
 	<head>

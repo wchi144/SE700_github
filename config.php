@@ -1,3 +1,6 @@
+<!--Configuration Page-->
+<!--Configuration MySQL database-->
+<!--by Shiyi Zhang and Wei-Ling Chin-->
 <?php
 $db_username = 'root';
 $db_password = 'admin';

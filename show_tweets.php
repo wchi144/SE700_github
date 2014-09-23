@@ -1,3 +1,6 @@
+<!--Show Tweets-->
+<!--Fetch tweets from database and display in tweet tab of Results Tabs section in prototypePage.php-->
+<!--by Shiyi Zhang and Wei-Ling Chin-->
 <?php
 include("config.php"); 
 
@@ -8,7 +11,7 @@ $profile = False;
 $geoword = False;
 $networking = False;
 
-// Check if we have user input from prototypePage.php
+// Check for user input from prototypePage.php
 if (isset($_POST['arguments'])) {
 
     foreach($_POST['arguments'] as $key => $value){ 

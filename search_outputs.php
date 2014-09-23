@@ -1,3 +1,7 @@
+<!--Search Outputs-->
+<!--Display output statistics in outputs tab of Results Tabs section in prototypePage.php-->
+<!--(Test and Checking Purposes)-->
+<!--by Shiyi Zhang and Wei-Ling Chin-->
 <?php
 include("config.php"); 
 
@@ -19,7 +23,7 @@ $tw_network_cnt = 0;
 $tw_geotagged_cnt = 0;
 $tw_geoword_cnt = 0;
 
-// Check if we have user input from prototypePage.php
+// Check for user input from prototypePage.php
 if (isset($_POST['arguments'])) {
 
     foreach($_POST['arguments'] as $key => $value){ 
@@ -57,7 +61,7 @@ $query_profile_twitter = "";
 $query_geoword_twitter = "";
 $query_networking_twitter = "";
 
-
+//Results for facebook
 if($facebook){
     //SELECT user_id FROM profile_fb WHERE artist LIKE "%katyperry%"
     $fb_query = "SELECT user_id "
@@ -115,6 +119,7 @@ if($facebook){
 
 }
 
+//Results for twitter
 if ($twitter){
 $try_query = "SELECT user_id FROM `post_twitter` where tweet_text LIKE '%".$input."%'";
 
@@ -189,9 +194,10 @@ while($row = mysqli_fetch_array($results))
         
 }
 }else {
-    //WRONG SHOULDN"T BE HERE
+    //SHOULDN"T BE HERE
 }
 
+//Echo statsitcs of results
 echo "<strong>Facebook Result Count</strong>: $fb_total_cnt<br>";
 echo "<strong>Profile Result Count</strong>: $fb_profile_cnt<br>";
 echo "<strong>Networking Result Count</strong>: $fb_network_cnt<br>";
@@ -203,8 +209,4 @@ echo "<strong>GeoTagged Result Count</strong>: $tw_geotagged_cnt<br>";
 echo "<strong>Profile Result Count</strong>: $tw_profile_cnt<br>";
 echo "<strong>GeoWord Result Count</strong>: $tw_geoword_cnt<br>";
 echo "<strong>Networking Result Count</strong>: $tw_network_cnt<br>";
-
-
-//$coverage = $count/$total_count*100;
-//echo "<strong>Coverage Percentage</strong> (result_cnt/tweet): $coverage%<br>";
 
