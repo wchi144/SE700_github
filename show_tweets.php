@@ -1,9 +1,10 @@
 <!--Show Tweets-->
 <!--Fetch tweets from database and display in tweet tab of Results Tabs section in prototypePage.php-->
-<!--by Shiyi Zhang and Wei-Ling Chin-->
+<!--By Shiyi Zhang and Wei-Ling Chin-->
 <?php
 include("config.php"); 
 
+// Initialize the variables
 $input = "";
 $query = "";
 $geotagged = False;
@@ -14,6 +15,7 @@ $networking = False;
 // Check for user input from prototypePage.php
 if (isset($_POST['arguments'])) {
 
+	// Check if each checkbox is ticked or not
     foreach($_POST['arguments'] as $key => $value){ 
         if($value=="geotagged") {
             $geotagged = True;
@@ -31,19 +33,21 @@ if (isset($_POST['arguments'])) {
         }  
     }
 } else {   
+	// Print out an error message if not user input is given after clicking the search button
     echo "Error: Cannot get input";
 }
 
-//Check for valid input
+// Check for valid input
 if(empty($input)){
     exit("Error: Please input a search word");  
 }
 
+// Use pattern-matching to select tweets that contain the user input keyword
 $try_query = "SELECT * FROM `post_twitter` where tweet_text LIKE '%".$input."%'";
 
 $results = mysqli_query($connecDB, $try_query);
 
-//Output results from database
+// Output the actual tweet results from database
 echo '<table class="result">';
 while($row = mysqli_fetch_array($results))
 {
@@ -55,4 +59,3 @@ while($row = mysqli_fetch_array($results))
 	echo '</tr>';
 }
 echo '</table>';
-

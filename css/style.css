@@ -1232,12 +1232,6 @@
 	input[stype=checkbox]:checked {
 		color:pink;
 	}
-        
-/*.resultsTable {
-
-  overflow-y: auto;
-  overflow-x: hidden; 
-}*/
 
 .resultsTabs {
   //background: #f96e5b;

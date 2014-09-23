@@ -1,6 +1,6 @@
 <!--Main Page-->
 <!--The prototype page where input is obtained and output is displayed in a form of a heat map.-->
-<!--by Shiyi Zhang and Wei-Ling Chin-->
+<!--By Shiyi Zhang and Wei-Ling Chin-->
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -16,8 +16,6 @@
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-layers.min.js"></script>
 		<script src="js/init.js"></script>
-
-        <!--        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>        -->
         <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>	
         <script src="js/table_cnt.js"></script>
@@ -30,12 +28,12 @@
 			<link rel="stylesheet" href="css/style.css" />
 			<link rel="stylesheet" href="css/style-wide.css" />
 			<link rel="stylesheet" href="css/style-noscript.css" />
-			
 		</noscript>
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 	</head>
 	
+	<!-- The body part of the prototype page -->
 	<body class="contact">
 	
 		<!-- Header -->
@@ -57,7 +55,7 @@
 				<p style="size:10px; margin-left:0px; float:left"><span class="fa fa-search fa-3x"></span>
 					Search an artist name and see their popularity distribution on the heatmap below.</p>
 						
-				<!-- Search -->
+				<!-- Search Section, including the text input and a search button -->
 				<div class="content">
 					<div class="row half no-collapse-1">
 						<div class="7u" id="inputForm" style="width:70%">
@@ -75,7 +73,7 @@
 					</div>			
 				</div>
 						
-				<!-- Filter -->
+				<!-- Filter section, including the dropdown filter and checkboxes for different options -->
 				<div class="filter">
 					<a id="anchorBeforeExpand" name="map" style="text-decoration:none; color:inherit">
 						<div class="filterTitle" onClick="filterTitleClick()" style="cursor:pointer; width:100%; height:100px; ">
@@ -96,7 +94,7 @@
 					<!-- Checkboxes -->
 					<div class="checkboxes" id="checkboxes" style="display:none; padding-top:10px; width:100%; height:200px; box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);">
 						
-						<!-- Filter By SNS Title -->
+						<!-- Filter By SNS Title, including the selectAll checkbox -->
 						<div class="filterSNSTitle" style="width:50%; height:32px; text-align:center; vertical-align:middle; float:left">
 							<strong style="margin:0 0 0 0; padding-left:10px; float:left; text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);"> Filter by SNS </strong>
 							<label class="checkbox2" for="rowSelectAllc2" style="padding-left:81px; margin-top:10px float:left;">Select All</label>
@@ -121,7 +119,7 @@
 						
 						<hr style="border: 0; height: 10px; background: white; box-shadow: -2px 2px 2px #83d3c9; width:100%">
 						
-						<!-- Filter By Result Type Title -->
+						<!-- Filter By Result Type Title, including the selectAll checkbox -->
 						<div class="filterTypeTitle" style="width:100%; height:32px; text-align:center; vertical-aligh:center; float:left">
 							<a id="anchorAfterExpand" name="mapExpand" style="text-decoration:none; color:inherit">
 								<strong style="margin:0 0 0 0; padding-left:10px; padding-top:0px; float:left;text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);"> Filter by result types </strong>
@@ -159,28 +157,30 @@
 				</div>
 							
 							
-				<!-- Map and Results -->	
+				<!-- Map and Results Section -->	
 				<div class="mapAndResults" style="margin-top:20px; padding-top:0px; width:100%; height:600px">
+				
+					<!-- Google Map Section -->
 					<div class="mapSection" style="width:65%; height:100%; float:left; margin-top:0px;">
 						<div class="map" id="map_canvas" style="width:100%; height: 100%;">
 							<p>Google Map Here!</p>
-						</div>
-										
-						
-								
+						</div>	
 					</div>
 								
 					<!-- Results Tabs -->
-                                        <div class="resultsTabs" style="height:100%; width:35%;padding-left:10px; margin-top:0px; float:left">
-                                            <div class="resultsTabsTitle" style="width:100%; height:10%" >
-						<ul>
-							<li class="active" onClick="tabs(1)" name="tab" id="tab_1"><a href='#results'><span>Results</span></a></li>
-							<li onClick="tabs(2)" name="tab" id="tab_2"><a href='#tweets'><span>Tweets</span></a></li>
-							<li onClick="tabs(3)" name="tab" id="tab_3"><a href='#inputs'><span>Inputs</span></a></li>
-							<li class="last" onClick="tabs(4)" name="tab" id="tab_4"><a href='#outputs'><span>Outputs</span></a></li>
-						<ul>
-                                            </div>
+                    <div class="resultsTabs" style="height:100%; width:35%;padding-left:10px; margin-top:0px; float:left">
+						
+						<!-- Navigation Menu -->
+						<div class="resultsTabsTitle" style="width:100%; height:10%" >
+							<ul>
+								<li class="active" onClick="tabs(1)" name="tab" id="tab_1"><a href='#results'><span>Results</span></a></li>
+								<li onClick="tabs(2)" name="tab" id="tab_2"><a href='#tweets'><span>Tweets</span></a></li>
+								<li onClick="tabs(3)" name="tab" id="tab_3"><a href='#inputs'><span>Inputs</span></a></li>
+								<li class="last" onClick="tabs(4)" name="tab" id="tab_4"><a href='#outputs'><span>Outputs</span></a></li>
+							<ul>
+                        </div>
 
+						<!-- Tab Contents -->
 						<div class="content" style="margin-top:0px; padding-top:0px;width:100%; height:80%;overflow-y: auto; overflow-x:hidden">
 						
 							<!-- Results Table -->
@@ -237,37 +237,35 @@
 							</div>
 						</div>
                                                     
-                                                <!-- Data Buttons -->
+                        <!-- Data Buttons -->
 						<div class="buttons" style="width:100%; height:10%; margin-top:5px; padding-top:5px">
 							<div class="buttonContainer" style="float:left">
-                                                            <button type="button" class="customizeButton" style="float:left; width:85px; margin-right:6px; text-align:center" id="dataButton" onclick = "showData()"> Data
-                                                            </button>
-                                                            <button type="button" class="customizeButton" style="float:left; width:85px; margin-right:6px; text-align:center" id="dataButton" onclick = "showMap()"> Map
-                                                            </button>
-                                                            <button type="button" class="customizeButton" style="float:left; width:180px; margin-right:0px;  text-align:center" id="countButton" onclick = "table_cnt()"> Sort Data
-                                                            </button>
+                                <button type="button" class="customizeButton" style="float:left; width:85px; margin-right:6px; text-align:center" id="dataButton" onclick = "showData()"> Data
+                                </button>
+                                <button type="button" class="customizeButton" style="float:left; width:85px; margin-right:6px; text-align:center" id="dataButton" onclick = "showMap()"> Map
+                                </button>
+                                <button type="button" class="customizeButton" style="float:left; width:180px; margin-right:0px;  text-align:center" id="countButton" onclick = "table_cnt()"> Sort Data
+                                </button>
 							</div>
 						</div>
-                                        </div>	
+                    </div>	
 				</div>		
 			</section>
 		</article>
-                <!--Make enter key also trigger search button-->
-                <script type="text/javascript">                
-                    $("#searchBox").keyup(function(event){
-                        if(event.keyCode == 13){
-                            $("#searchButton").click();
-                        }
-                    });
-                </script>
+        <!--Make enter key also trigger search button-->
+        <script type="text/javascript">                
+            $("#searchBox").keyup(function(event){
+                if(event.keyCode == 13){
+                    $("#searchButton").click();
+                }
+            });
+        </script>
 
 		<!-- Footer -->
 		<footer id="footer">
 			<ul class="copyright">
 				<li>&copy; 2014 SE700</li><li>Design: szha460 & wchi144</li>
 			</ul>
-		</footer>
-                
-               
+		</footer>    
 	</body>
 </html>

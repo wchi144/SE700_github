@@ -1,5 +1,5 @@
 <!--Home Page-->
-<!--by Shiyi Zhang and Wei-Ling Chin-->
+<!--By Shiyi Zhang and Wei-Ling Chin-->
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -26,10 +26,10 @@
 		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
 	</head>
 	
+	<!-- The body part of the user interface -->
 	<body class="index" style="width:100%; height:100%; padding:0px; margin:0px">
-	
-<!--		<div id="mainFrame" style="background-image: url('images/headerPink.jpg'); background-size:100%">-->
 		<div id="mainFrame" style="background: url('images/headerPink.jpg') no-repeat; background-size:125%">
+		
 			<!-- Header -->
 			<header id="header" class="alt" >
 				<h1 id="logo"><a href="home.php">Project #100</a></h1>

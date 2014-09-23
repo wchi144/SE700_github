@@ -1,9 +1,10 @@
 <!--Fetch Page-->
 <!--Fetch results for both Twitter and Facebook from database depending on the user input-->
-<!--by Shiyi Zhang and Wei-Ling Chin-->
+<!--By Shiyi Zhang and Wei-Ling Chin-->
 <?php
 include("config.php"); 
 
+// Initialize the variables
 $input = "";
 $geotagged = False;
 $profile = False;
@@ -15,6 +16,7 @@ $twitter = False;
 // Check if we have user input from prototypePage.php
 if (isset($_POST['arguments'])) {
 
+	// Check if each checkbox is ticked or not
     foreach($_POST['arguments'] as $key => $value){ 
         if($value=="geotagged") {
             $geotagged = True;
@@ -38,9 +40,11 @@ if (isset($_POST['arguments'])) {
         }  
     }
 } else {   
+	// Print out an error message if not user input is given after clicking the search button
     echo "Error: Cannot get input";
 }
 
+// Initialize the query for each checkbox
 $query_geotagged_fb = "";
 $query_profile_fb = "";
 $query_geoword_fb = "";
@@ -51,26 +55,28 @@ $query_geoword_twitter = "";
 $query_networking_twitter = "";
 $final_query = "";
 
-//Check for valid input
+// Check for valid input
 if(empty($input)){
     exit("Error: Please input a search word");  
 }
 
-//Get twitter results
+// Get twitter results
 if($twitter){
     $twitter_query = "SELECT user_id FROM `post_twitter` where tweet_text LIKE '%".$input."%'";
 
     $results = mysqli_query($connecDB, $twitter_query);
 
-    //Output results from database
+    // Output results from database
     echo '<table class="result">';
     while($row = mysqli_fetch_array($results))
     {
             $user_id = $row['user_id'];
             $city = "None";
-            //echo $user_id;
 
+			// Get the user location information using the geo-tagged method, the result will be assigned into the $city variable
             if($geotagged){
+			
+				// Query data from the api_twitter table which uses the geo-tagged method
                 $query = "SELECT * FROM api_twitter WHERE user_id=".$user_id;
                 $outputs = mysqli_query($connecDB, $query);
                 if(mysqli_num_rows($outputs) != 0){
@@ -85,7 +91,10 @@ if($twitter){
 
             }
 
+			// If no location information can be found, use the user profile method to locate this user
             if($city == "None" && $profile){
+			
+				// Query data from the profile_twitter table which uses the user profile method
                 $query = "SELECT profile_twitter.location_id, locations.city, locations.country, locations.geo_lat, locations.geo_long FROM profile_twitter JOIN locations ON profile_twitter.location_id = locations.location_id WHERE profile_twitter.`user_id` =".$user_id;
                 $outputs = mysqli_query($connecDB, $query);
                 if(mysqli_num_rows($outputs) != 0){
@@ -99,7 +108,10 @@ if($twitter){
                 }
             }
  
+			// If no location information can be found, use the social network method to locate this user
             if($city == "None" && $networking){
+			
+				// Query data from the networking table which uses the social network method
                 $query = "SELECT networking.location_id, locations.city, locations.country, locations.geo_lat, locations.geo_long FROM networking JOIN locations ON networking.location_id = locations.location_id WHERE networking.`user_id` =".$user_id;
                 $outputs = mysqli_query($connecDB, $query);
                 if(mysqli_num_rows($outputs) != 0){
@@ -113,7 +125,10 @@ if($twitter){
                 }
             }
             
+			// If no location information can be found, use the geo-word table to locate the user
             if($city == "None" && $geoword){
+			
+				// Query data from the geoword table which uses the geo-word method
                 $query = "SELECT geoword.location_id, locations.city, locations.country, locations.geo_lat, locations.geo_long FROM geoword JOIN locations ON geoword.location_id = locations.location_id WHERE geoword.`user_id` =".$user_id;
                 $outputs = mysqli_query($connecDB, $query);
                 if(mysqli_num_rows($outputs) != 0){
@@ -127,10 +142,12 @@ if($twitter){
                 }
             }
 
+			// If no location information can be found using the four geolocation methods, the user is considered as unlocatable
             if($city=="None" || empty($city)){
                 continue;
             }
 
+			// Display the locations of the users onto a table
             echo '<tr>';
             echo '<td>' . $country . '</td><td>' . $city . '</td><td>' . $lat.', '.$long . '</td><td>' . $cnt . '</td>';
             echo '</tr>';
@@ -138,23 +155,29 @@ if($twitter){
     echo '</table>';
 }
 
-//Get facebook results
+// Get Facebook results if the Facebook checkbox is ticked
 if($facebook){
-    //SELECT user_id FROM profile_fb WHERE artist LIKE "%katyperry%"
+    // Get the user profile location from the profile_fb table according to the user input
+	// E.g., to get the locations of users that have mentioned Katy Perry on Facebook: SELECT user_id FROM profile_fb WHERE artist LIKE "%katyperry%"
     $fb_query = "SELECT user_id "
             . "FROM profile_fb "
             . "WHERE artist LIKE '%".$input."%'";
 
     $result_fb = mysqli_query($connecDB, $fb_query);
 
+	// Display the result into the result table
     echo '<table class="result">';
+	
+	// For each row, store the location information into the $city variable
     while($row_fb = mysqli_fetch_array($result_fb))
     {
             $user_id = $row_fb['user_id'];
             $city = "None";
-            //echo $user_id;
 
+			// If the profile checkbox is selected, use the user profile method to locate a user
             if($profile){
+				
+				// Query data from the profile_fb table which uses the user profile method
                 $query = "SELECT profile_fb.location_id, locations.city, locations.country, locations.geo_lat, locations.geo_long "
                         . "FROM profile_fb "
                         . "JOIN locations ON profile_fb.location_id = locations.location_id "
@@ -172,7 +195,10 @@ if($facebook){
 
             }
 
+			// If no location information can be found, use the social network method to locate this user
             if($city == "None" && $networking){
+			
+				// Query data from the networking_fb table which uses the social network method
                 $query = "SELECT networking_fb.location_id, locations.city, locations.country, locations.geo_lat, locations.geo_long "
                         . "FROM networking_fb "
                         . "JOIN locations ON networking_fb.location_id = locations.location_id "
@@ -189,10 +215,12 @@ if($facebook){
                 }
             }
             
+			// If not location information can be found using the two geolocation methods for Facebook, the user is then considered as unlocatable
             if($city=="None" || empty($city)){
                 continue;
             }
 
+			// Display the results into the table
             echo '<tr>';
             echo '<td>' . $country . '</td><td>' . $city . '</td><td>' . $lat.', '.$long . '</td><td>' . $cnt . '</td>';
             echo '</tr>';
@@ -245,6 +273,3 @@ function geolonglat($lat, $long){
     }
 
 }
-
-
-

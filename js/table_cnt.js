@@ -1,4 +1,6 @@
-//var table = $('table')[0];
+/**
+
+*/
 function table_cnt(){
     var table = document.getElementById('results_table');
     var rowGroups = {};
