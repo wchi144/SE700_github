@@ -1,36 +1,49 @@
-/*
- * Loads results of sql search to show on the heat map
+/* 
+ * Load results of sql search
+ * Two Parts
+ * -Map Results using Google Map API
+ * -Pass input from prototypePage.php to search_inputs, search_outputs, show_tweets, and fetch_page for querying
  * By Shiyi Zhang and Wei-Ling Chin
+ */
+
+/*
+ * Create heat map using Google Map API
  */
 // Adding 500 Data Points
 var map, pointarray, heatmap, geocode;
 
+//Array with location information (longitude and latitude pair coordinates)
 var taxiData = [
   //new google.maps.LatLng(37.782551, -122.445368),
 ];
 
-// Initialize the heat map
+//initialise google map 
 function initialize() {
   geocoder = new google.maps.Geocoder();
   var mapOptions = {
     zoom: 2,
+    //center: new google.maps.LatLng(-36.9097, 174.7713),
     center: new google.maps.LatLng(-0.0000, -160.0000),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
-
-  //Show the map in the map_canvas div created in the prototypePage.php
-  map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
   
-  //Add a heat map layer on the map
-  var pointArray = new google.maps.MVCArray(taxiData);
-  heatmap = new google.maps.visualization.HeatmapLayer({data: pointArray});
+  //Show on map_canvas in prototypePgae.php
+  map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 
-  //Show the heat map
+  var pointArray = new google.maps.MVCArray(taxiData);
+  
+  heatmap = new google.maps.visualization.HeatmapLayer({data: pointArray});
+  
+  //reload map
   heatmap.setMap(map);
+  
+  
+  
 }
 
+//google.maps.event.addDomListener(window, 'load', initialize);
 //Function to get data from table and store in TaxiData array which is then used
-//to create the heat map. Reload map after each iteration of table (which should 
+//to creat the heatmap. Reload map after each iteration of table (which should 
 //only be once). Google map has OVER_QUERY_LIMIT
 //possible solution:
 //https://developers.google.com/maps/documentation/business/articles/usage_limits
@@ -38,24 +51,26 @@ function codeAddress() {
     
     //Clear taxiData array on every new search
     taxiData.length = 0
-	
-    //Get data from table
-    var oTBL = document.getElementById('results_table');
     
+    //Get all data from results table
+    var oTBL = document.getElementById('results_table');
+   
     for (var x = 1; x < oTBL.rows.length; x++) {
-        var country = oTBL.rows[x].cells[0].firstChild.data;
-        var city = oTBL.rows[x].cells[1].firstChild.data;
-        var latlong = oTBL.rows[x].cells[2].firstChild.data;
-        var ppl_cnt = oTBL.rows[x].cells[3].firstChild.data;
+            var country = oTBL.rows[x].cells[0].firstChild.data;
+            var city = oTBL.rows[x].cells[1].firstChild.data;
+            var latlong = oTBL.rows[x].cells[2].firstChild.data;
+            var ppl_cnt = oTBL.rows[x].cells[3].firstChild.data;
             
-        var splitLatLng = latlong.split(",");
-        var lat = splitLatLng[0];
-        var long = splitLatLng[1];
+            var splitLatLng = latlong.split(",");
+            var lat = splitLatLng[0];
+            var long = splitLatLng[1];
             
-        for (i = 0; i < ppl_cnt; i++) {
-			taxiData.push(new google.maps.LatLng(lat, long));
-        }   
+            for (i = 0; i < ppl_cnt; i++) {
+                taxiData.push(new google.maps.LatLng(lat, long));
+            }
+            
     } 
+    //heatmap.setMap(map);
 }
 
 //Testing function to see what is in TaxiData
@@ -131,6 +146,7 @@ function HomeControl(controlDiv, map) {
   });
 
 }
+
 //Back up to reload map for backup "Map" button in prototypePage
 function showMap() {
     
@@ -157,26 +173,24 @@ function showMap() {
     heatmap.setMap(map);
 }
 
+/*
+ * Pass input from prototypePage.php to php files which queries the database
+ */
 function load_results_1(){
-
-    //Delete whatever was previously inputted
-    //$input = document.getElementById("searchButton").value;
-   
-    //arguments0 = $("#inputForm input[name='searchBox']").val();
-    var elmtTable = document.getElementById('results_table');
     
+    //Delete previous results from all tables
+    var elmtTable = document.getElementById('results_table');  
     for (var i = 1; i < elmtTable.rows.length; i++)
     {
          elmtTable.deleteRow(i);
-    }
-    
+    }   
     var elmtTable2 = document.getElementById('tweet_table');
-    
     for (var i = 1; i < elmtTable2.rows.length; i++)
     {
          elmtTable2.deleteRow(i);
     }
     
+    //Get input of the checkboxes
     arguments0 = {
     input: $("#inputForm input[name='searchBox']").val(),    
     geotagged: $('#inlineCheckbox_geotagged:checked').val(),
@@ -185,8 +199,9 @@ function load_results_1(){
     networking: $('#inlineCheckbox_networking:checked').val(),
     facebook: $('#inlineCheckbox_facebook:checked').val(),
     twitter: $('#inlineCheckbox_twitter:checked').val()
-  };
-  
+    };
+    
+    //Get inputs of checkboxes for show_tweets.php
     arguments1 = {
         input: $("#inputForm input[name='searchBox']").val(),    
         geotagged: $('#inlineCheckbox_geotagged:checked').val(),
@@ -195,6 +210,7 @@ function load_results_1(){
         networking: $('#inlineCheckbox_networking:checked').val()
     };
     
+    //Pass input into search_inputs.php and hence load the result in tab_content_3 (inputs tab)
     $.ajax({
         type: "POST",
         url: "search_inputs.php",
@@ -205,6 +221,7 @@ function load_results_1(){
         }
     });
     
+    //Pass input into search_outputs.php and hence load the result in tab_content_4 (outputs tab)
     $.ajax({
         type: "POST",
         url: "search_outputs.php",
@@ -214,20 +231,23 @@ function load_results_1(){
 
         }
     });
-	
+    
+    //Show loading animation
     $('.animation_image').show(); 
     
-	
+    //Pass input into fetch_page.php and hence load the result in dataBody (results tab)
     $.ajax({
         type: "POST",
         url: "fetch_page.php",
         data: {arguments: arguments0},
         success: function(data) {
           $(".dataBody").html(data);   
-          $('.animation_image').hide();
+          $('.animation_image').hide(); 
         }
     });
-
+    
+    //Pass input into show_tweets.php but only when twitter checkbox is checked
+    //and show results in tweet_table_body (tweets tab)
     if($('#inlineCheckbox_twitter:checked').val()==="twitter"){
         $('.animation_image_2').show();  
         $('#resulting_tweets').show();
@@ -242,6 +262,8 @@ function load_results_1(){
             }
         });
     }
+    
+
     return false;
 
 }  
@@ -254,8 +276,6 @@ function load_results(){
     setTimeout(function(){
         codeAddress();
     }, 10000);
-	
-	//The heat map will show after a 10s delay
     setTimeout(function(){
         heatmap.setMap(map);
     }, 10000);
